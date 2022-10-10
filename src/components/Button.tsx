@@ -1,13 +1,9 @@
-import {ButtonColors, ButtonContainer} from "./Button.styles"
+import { ButtonColors, ButtonContainer } from './Button.styles'
 
-
-interface ButtonProps{
+interface ButtonProps {
   variant?: ButtonColors
 }
 
-
-
-export function Button({variant = "primary"}: ButtonProps){
-  return <ButtonContainer variant={variant} >Enviar</ButtonContainer>
-
-} 
+export function Button({ variant = 'primary' }: ButtonProps) {
+  return <ButtonContainer variant={variant}>Enviar</ButtonContainer>
+}

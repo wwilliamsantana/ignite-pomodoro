@@ -58,3 +58,28 @@ export const HistoryList = styled.div`
     }
   }
 `
+const STATUS_COLOR = {
+  yellow: 'yellow-500',
+  red: 'red-500',
+  green: 'green-500',
+} as const
+// "as const" -> Definimos que eses valores nunca vão mudar, que serão constantes, que sempre serão estes! É por isso evitamos o erro do TypeScript
+
+interface StatusProps {
+  statusColor: keyof typeof STATUS_COLOR
+}
+// Colocando dessa forma conseguimos pegar apenas as chaves do nosso objeto, definindo os valores para nossa interface. Então caso seja adicionado uma cor, será automaticamente add na nossa interface
+
+export const Status = styled.span<StatusProps>`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: ' ';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: ${(props) => props.theme[STATUS_COLOR[props.statusColor]]};
+  }
+`

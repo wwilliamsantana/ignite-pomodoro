@@ -13,7 +13,7 @@ import {
   TaskInput,
 } from './styles'
 
-const schemaValidateFormInput = zod.object({
+const schemaValidateNewForm = zod.object({
   task: zod.string().min(1, 'Informe uma tarefa'),
   minutesAmount: zod
     .number()
@@ -23,13 +23,21 @@ const schemaValidateFormInput = zod.object({
 
 // Estamos fazendo a validação com o próprio HTML é com button desabilitado, não havendo necessidade de utilizar o zod, está implementado mais para FINS DIDÁTICO
 
+type newCycleFormData = zod.infer<typeof schemaValidateNewForm>
+// Simplificamos utilizadno o zod, ao invé sde criamos uma interface manual
+
 export function Home() {
-  const { register, handleSubmit, watch } = useForm({
-    resolver: zodResolver(schemaValidateFormInput),
+  const { register, handleSubmit, watch, reset } = useForm<newCycleFormData>({
+    resolver: zodResolver(schemaValidateNewForm),
+    defaultValues: {
+      minutesAmount: 0,
+      task: '',
+    },
   })
 
-  function handleCreateNew(data: any) {
+  function handleCreateNew(data: newCycleFormData) {
     console.log(data)
+    reset()
   }
 
   const task = watch('task')

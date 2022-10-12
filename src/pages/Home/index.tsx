@@ -12,6 +12,7 @@ import {
   StartCountdownButton,
   TaskInput,
 } from './styles'
+import { useState } from 'react'
 
 const schemaValidateNewForm = zod.object({
   task: zod.string().min(1, 'Informe uma tarefa'),
@@ -26,7 +27,18 @@ const schemaValidateNewForm = zod.object({
 type newCycleFormData = zod.infer<typeof schemaValidateNewForm>
 // Simplificamos utilizadno o zod, ao invé sde criamos uma interface manual
 
+interface Cycle {
+  id: string
+  task: string
+  minutesAmount: number
+}
+
 export function Home() {
+  const [cycle, setCycle] = useState<Cycle[]>([])
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
+
+  // activeCycleID
+
   const { register, handleSubmit, watch, reset } = useForm<newCycleFormData>({
     resolver: zodResolver(schemaValidateNewForm),
     defaultValues: {
@@ -36,9 +48,23 @@ export function Home() {
   })
 
   function handleCreateNew(data: newCycleFormData) {
-    console.log(data)
+    const id = String(new Date().getTime())
+
+    const newCycle: Cycle = {
+      id,
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+    }
+
+    setCycle((state) => [...state, newCycle])
+    setActiveCycleId(id)
+
     reset()
   }
+
+  const activeCycle = cycle.find((item) => item.id === activeCycleId)
+
+  console.log(activeCycle)
 
   const task = watch('task')
   const isDisabledButton = !task

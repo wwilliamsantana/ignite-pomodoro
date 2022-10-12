@@ -21,12 +21,14 @@ export const HeaderContainer = styled.header`
 
       border-top: 3px solid transparent;
       border-bottom: 3px solid transparent;
+      // Adicionamos essas border para que quando for colocado no Hover não seja empurrado para cima o elemento
 
       &:hover {
         border-bottom: 3px solid ${(props) => props.theme['green-500']};
       }
 
       &.active {
+        // Quando estamos no link selecionado ele vai adicionar esta classe 'active' -> É nisso conseguimos adicionar um color
         color: ${(props) => props.theme['green-500']};
       }
     }

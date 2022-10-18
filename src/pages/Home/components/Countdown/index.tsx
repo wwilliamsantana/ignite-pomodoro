@@ -25,9 +25,8 @@ export function Countdown() {
 
   // Countdown
   useEffect(() => {
-    let interval: number // Variável vazia
+    let interval: number
 
-    // Condicional para verificar se temos um cycle ativo
     if (activeCycle) {
       interval = setInterval(() => {
         const secondsDifference = differenceInSeconds(
@@ -40,9 +39,9 @@ export function Countdown() {
           setSecondPassed(0)
           clearInterval(interval)
         } else {
-          setSecondPassed(secondsDifference) // A função "differenceInSeconds" está calculando a quantidade de segundos. Pegando o DateAtual com a do nosso Date do Cycle (Momento de criação)
+          setSecondPassed(secondsDifference)
         }
-      }, 1000) // Nosso interval está atualizando a cada 1s
+      }, 1000)
     }
 
     return () => {
